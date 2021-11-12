@@ -15,7 +15,9 @@ export default class Home extends Component {
                     </div>
                 </div>
                 <div className="h-screen flex-1 panel">
-                    <View image="./images/numbers.png" name="Speed Numbers" description="Memorize random digits as fast as you can."/>
+                    <View image="./images/number-blocks.png" name="Speed Numbers" description="Memorize random digits as fast as you can."/>
+                    <View image="./images/user.png" name="Name and Faces" description="Recall someone's name from a face." />
+                    <View image="./images/poetry.png" name="Poetry" description="Memorize a poem and recall it." />
                 </div>
             </div>
         )
