@@ -14,10 +14,11 @@ export default class Home extends Component {
                         <button className="text-gray-100 shadow-md bg-blue-700 w-1/3 rounded-md text-2xl p-3" >Get Started</button>
                     </div>
                 </div>
-                <div className="h-screen flex-1 panel">
-                    <View image="./images/number-blocks.png" name="Speed Numbers" description="Memorize random digits as fast as you can."/>
-                    <View image="./images/user.png" name="Name and Faces" description="Recall someone's name from a face." />
-                    <View image="./images/poetry.png" name="Poetry" description="Memorize a poem and recall it." />
+                <div className="h-screen flex-1 grid grid-cols-3 grid-rows-4 grid-flow-row gap-x-4 p-10 panel">
+                    <View link="/speed-numbers" image="./images/number-blocks.png" name="Speed Numbers" description="Memorize random digits as fast as you can."/>
+                    <View link="/names-and-faces" image="./images/user.png" name="Name and Faces" description="Recall someone's name from a face." />
+                    <View link="/poetry" image="./images/poetry.png" name="Poetry" description="Memorize a poem and recall it." />
+                    <View link="/chess" image="./images/chess.png" name="Chess" description="Memorize a random chess position." />
                 </div>
             </div>
         )
