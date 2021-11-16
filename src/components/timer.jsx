@@ -19,8 +19,10 @@ export default class Timer extends Component {
 
     countDown () {
         let newSeconds = this.state.seconds - 1;
-        if (newSeconds < 0 && this.state.minutes === 0)
+        if (newSeconds < 0 && this.state.minutes === 0) {
             clearInterval(this.state.timer);
+            this.props.onTimerEnd();
+        }
         else if (newSeconds < 0)
             this.setState({ minutes: this.state.minutes - 1, seconds: 59 });
         else
