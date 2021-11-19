@@ -32,26 +32,30 @@ export default class Grid extends Component {
 
     render () {
         let arr = [];
-        if (this.state.submitted) {
-            for (let i = 0; i < 500; i++)
+        for (let i = 0; i < 500; i++) {
+            if (!this.props.isTimerStarted) {
+                arr.push(<Cell key={i} num="" editable={false} color="default" />);
+            } else if (this.state.submitted) {
                 arr.push(<Cell key={i} num={this.state.inputs[i] === -11 ? "" : this.state.inputs[i]} editable={false} color={this.state.inputs[i] === this.state.nums[i].toString() ? "green" : "red" } />);
-        } else if (this.props.isTimerDone) {
-            for (let i = 0; i < 500; i++)
+            } else if (this.props.isTimerDone) {
                 arr.push(<Cell key={i} identifier={i} num="" editable={true} handleInput={this.handleInput} color="default" />);
-        } else {
-            for (let i = 0; i < 500; i++)
-                arr.push(<Cell key={i} num={this.state.nums[i]} editable={false} color = "default" />);
+            } else {
+                arr.push(<Cell key={i} num={this.state.nums[i]} editable={false} color="default" />);
+            }
         }
         return (
-            <div>
-                <div style={gridStyles} className="grid gap-1">
-                    {arr}
+            <div className="flex w-1/2 h-screen">
+                <div className="mx-auto">
+                    <div style={gridStyles} className="grid gap-1 m-10">
+                        {arr}
+                    </div>
+                    {
+                        this.props.isTimerDone && 
+                        !this.state.submitted ?
+                        <button className="text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleClick}>Submit</button> :
+                        null
+                    }
                 </div>
-                {
-                    this.props.isTimerDone ?
-                    <button onClick={this.handleClick}>Submit</button> :
-                    null
-                }
             </div>
         )
     }
