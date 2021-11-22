@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class Face extends Component {
     constructor () {
@@ -7,13 +8,11 @@ export default class Face extends Component {
     }
 
     componentDidMount () {
-        fetch("https://thispersondoesnotexist.com/image")
-            .then(response => response.blob())
-            .then(imageBlob => {
-                const imageObjectURL = URL.createObjectURL(imageBlob);
-                this.setState({imageURL: imageObjectURL});
-            })
-            .catch(err => {
+        axios.get("https://fakeface.rest/face/json")
+            .then(res => {
+                const imageObject = res.data;
+                this.setState({ imageURL: imageObject.image_url });
+            }).catch(err => {
                 console.log(err);
             });
     }
