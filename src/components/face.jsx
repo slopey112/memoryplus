@@ -5,13 +5,9 @@ export default class Face extends Component {
     constructor () {
         super();
         this.state = {imageURL: ""};
-    }
-
-    componentDidMount () {
-        axios.get("https://fakeface.rest/face/json")
+        axios.get("http://localhost:5000/api/faces")
             .then(res => {
-                const imageObject = res.data;
-                this.setState({ imageURL: imageObject.image_url });
+                this.setState({ imageURL: res.data });
             }).catch(err => {
                 console.log(err);
             });
@@ -19,7 +15,7 @@ export default class Face extends Component {
 
     render () {
         return (
-            <img src={this.state.imageURL} />
+            <img className="h-96 w-96" src={this.state.imageURL} />
         );
     }
 }

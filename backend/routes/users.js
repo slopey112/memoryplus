@@ -1,7 +1,7 @@
 const router = require("express").Router();
 let User = require("../models/user.model");
 
-router.route("/api/add_user").post((req, res) => {
+router.route("/add_user").post((req, res) => {
     const username = req.body.username;
     const newUser = new User({ username });
     newUser.save()
