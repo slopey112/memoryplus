@@ -1,60 +1,33 @@
 import React, { Component } from 'react';
-import Face from './face';
-import Random from 'random-name';
-import axios from 'axios';
+import Gallery from './gallery';
+import Timer from './timer';
 
 export default class NamesAndFaces extends Component {
     constructor () {
         super();
-        let arr = []
-        for (let i = 0; i < 50; i++) {
-            arr.push({ 
-                image: "",
-                name: Random.first() + " " + Random.last() 
-            });
-        }
-        this.state = { idx: 0, faces: arr };
-        this.left = this.left.bind(this);
-        this.right = this.right.bind(this);
-        this.getFaceURL = this.getFaceURL.bind(this);
+        this.state = { isTimerStarted: false, isTimerDone: false };
+        this.handleTimerStart = this.handleTimerStart.bind(this);
+        this.handleTimerEnd = this.handleTimerEnd.bind(this);
     }
 
-    componentDidMount () {
-        this.getFaceURL();
+    handleTimerStart () {
+        this.setState({ isTimerStarted: true });
     }
 
-    left () {
-        this.setState({ idx: this.state.idx - 1 < 0 ? 49 : this.state.idx - 1 }, this.getFaceURL);
-    }
-
-    right () {
-        this.setState({ idx: (this.state.idx + 1) % 50 }, this.getFaceURL);
-    }
-
-    getFaceURL () {
-        if (this.state.faces[this.state.idx].image === "") {
-            axios.get("http://localhost:5000/api/faces")
-                .then(res => {
-                    this.setState({ faces: [
-                        ...this.state.faces.slice(0, this.state.idx),
-                        {
-                            image: res.data,
-                            name: this.state.faces[this.state.idx].name
-                        },
-                        ...this.state.faces.slice(this.state.idx+1)
-                    ]});
-                });
-        }
+    handleTimerEnd () {
+        this.setState({ isTimerDone: true });
     }
 
     render () {
-        return (
+        return ( 
             <div>
-                <Face image={this.state.faces[this.state.idx].image}/>
-                <p>{this.state.faces[this.state.idx].name}</p>
-                <button onClick={this.left}>Left</button>
-                <button onClick={this.right}>Right</button>
+                {
+                    this.state.isTimerStarted ?
+                    <Gallery /> :
+                    <h1>Names and Faces</h1>
+                }
+                <Timer onTimerStart={this.handleTimerStart} onTimerEnd={this.handleTimerEnd} />
             </div>
-        );
+        )
     }
 }
