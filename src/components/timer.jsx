@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class Timer extends Component {
     constructor () {
         super();
-        this.state = { minutes: 0, seconds: 1, started: false, timer: {} }
+        this.state = { minutes: 0, seconds: 5, started: false, timer: {} }
         this.getTime = this.getTime.bind(this);
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
@@ -39,8 +39,8 @@ export default class Timer extends Component {
         return (
             <div className="bg-gradient-to-t from-blue-400 to-blue-600 flex w-1/2 h-screen">
                 <div className="m-auto bg-gray-200 p-4 w-72  rounded-lg">
-                    <h1 className="my-3 text-7xl">{this.getTime()}</h1>
-                    { this.state.started ? null : <button className="text-gray-100 shadow-md bg-blue-700 w-24 rounded-md text-2xl p-4" onClick={this.startTimer}>Start</button> }
+                    <h1 className="text-center my-3 text-7xl">{this.getTime()}</h1>
+                    { this.state.started ? null : <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-24 rounded-md text-2xl p-4" onClick={this.startTimer}>Start</button> }
                 </div>
             </div>
         )

@@ -52,7 +52,7 @@ export default class Grid extends Component {
                     {
                         this.props.isTimerDone && 
                         !this.state.submitted ?
-                        <button className="text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleClick}>Submit</button> :
+                        <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleClick}>Submit</button> :
                         null
                     }
                 </div>

@@ -23,7 +23,7 @@ export default class NamesAndFaces extends Component {
             <div>
                 {
                     this.state.isTimerStarted ?
-                    <Gallery /> :
+                    <Gallery isTimerDone={this.state.isTimerDone} /> :
                     <h1>Names and Faces</h1>
                 }
                 <Timer onTimerStart={this.handleTimerStart} onTimerEnd={this.handleTimerEnd} />

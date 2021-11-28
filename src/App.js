@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import Home from './components/home';
 import SpeedNumbers from './components/speed-numbers';
 import NamesAndFaces from './components/names-and-faces';

@@ -3,6 +3,10 @@ import Face from './face';
 import Random from 'random-name';
 import axios from 'axios';
 
+const defaultStyles = "bg-gray-200";
+const greenStyles = "bg-green-200";
+const redStyles = "bg-red-200";
+
 export default class Gallery extends Component {
     constructor () {
         super();
@@ -13,10 +17,12 @@ export default class Gallery extends Component {
                 name: Random.first() + " " + Random.last() 
             });
         }
-        this.state = { idx: 0, faces: arr };
+        this.state = { idx: 0, faces: arr, text: "", feedback: "default", ct: 0 };
         this.left = this.left.bind(this);
         this.right = this.right.bind(this);
         this.getFaceURL = this.getFaceURL.bind(this);
+        this.handleTextChange = this.handleTextChange.bind(this);
+        this.handleButtonClick = this.handleButtonClick.bind(this);
     }
 
     componentDidMount () {
@@ -28,13 +34,26 @@ export default class Gallery extends Component {
     }
 
     right () {
-        this.setState({ idx: (this.state.idx + 1) % 50 }, this.getFaceURL);
+        this.setState({ idx: (this.state.idx + 1) % 50, feedback: "default" }, this.getFaceURL);
+    }
+
+    handleTextChange (e) {
+        this.setState({ text: e.target.value });
+    }
+
+    handleButtonClick () {
+        if (this.state.text === this.state.faces[this.state.idx].name)
+            this.setState({ feedback: "green", ct: this.state.ct + 1  });
+        else 
+            this.setState({ feedback: "red" });
     }
 
     getFaceURL () {
         if (this.state.faces[this.state.idx].image === "") {
+            console.log("calling get face");
             axios.get("http://localhost:5000/api/faces")
                 .then(res => {
+                    console.log(res);
                     this.setState({ faces: [
                         ...this.state.faces.slice(0, this.state.idx),
                         {
@@ -43,6 +62,8 @@ export default class Gallery extends Component {
                         },
                         ...this.state.faces.slice(this.state.idx+1)
                     ]});
+                }).catch(err => {
+                    console.log(err);
                 });
         }
     }
@@ -51,12 +72,19 @@ export default class Gallery extends Component {
         if (this.props.isTimerDone) {
             return (
                 <div>
+                    <Face image={this.state.faces[this.state.idx].image} />
+                    <input className={this.state.feedback === "default" ? defaultStyles : (this.state.feedback === "green" ? greenStyles : redStyles)} onChange={this.handleTextChange} type="text" />
+                    { 
+                        this.state.feedback === "default" ?
+                        <button onClick={this.handleButtonClick}>Submit</button> :
+                        <button onClick={this.right}>Next</button>
+                    }
                 </div>
             );
         } else {
             return (
                 <div>
-                    <Face image={this.state.faces[this.state.idx].image}/>
+                    <Face image={this.state.faces[this.state.idx].image} />
                     <p>{this.state.faces[this.state.idx].name}</p>
                     <button onClick={this.left}>Left</button>
                     <button onClick={this.right}>Right</button>
