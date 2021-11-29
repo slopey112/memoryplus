@@ -20,11 +20,11 @@ export default class NamesAndFaces extends Component {
 
     render () {
         return ( 
-            <div>
+            <div className="flex">
                 {
                     this.state.isTimerStarted ?
                     <Gallery isTimerDone={this.state.isTimerDone} /> :
-                    <h1>Names and Faces</h1>
+                    <h1 className="flex w-1/2 h-screen"><span className="block m-auto text-9xl text-center text-gray-400">Names and Faces</span></h1>
                 }
                 <Timer onTimerStart={this.handleTimerStart} onTimerEnd={this.handleTimerEnd} />
             </div>

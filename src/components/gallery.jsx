@@ -83,11 +83,15 @@ export default class Gallery extends Component {
             );
         } else {
             return (
-                <div>
-                    <Face image={this.state.faces[this.state.idx].image} />
-                    <p>{this.state.faces[this.state.idx].name}</p>
-                    <button onClick={this.left}>Left</button>
-                    <button onClick={this.right}>Right</button>
+                <div className="flex w-1/2 h-screen">
+                    <div className="m-auto">
+                        <div className="flex">
+                            <button className="hover:bg-gray-200" onClick={this.left}><img className="w-l2 h-12" src="./images/next_left.png" /></button>
+                            <Face image={this.state.faces[this.state.idx].image} />
+                            <button className="hover:bg-gray-200" onClick={this.right}><img className="w-12 h-12" src="./images/next_right.png" /></button>
+                        </div>
+                        <p className="text-center m-3 text-5xl">{this.state.faces[this.state.idx].name}</p>
+                    </div>
                 </div>
             );
         }
