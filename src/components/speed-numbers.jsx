@@ -21,8 +21,8 @@ export default class SpeedNumbers extends Component {
         this.setState({ isTimerStarted: true });
     }
 
-    handleCorrect () {
-        this.setState({ correct: this.state.correct + 1}); 
+    handleCorrect (count) {
+        this.setState({ correct: count}); 
     }
 
     handleScoreboard () {
@@ -34,7 +34,7 @@ export default class SpeedNumbers extends Component {
             <div className="flex">
                 { this.state.isScoreboardVisible ?
                     <Scoreboard numerator={this.state.correct} denominator={500} /> :
-                    <Grid isTimerDone={this.state.isTimerDone} isTimerStarted={this.state.isTimerStarted} onCorrect={this.handleCorrect} />
+                    <Grid isTimerDone={this.state.isTimerDone} isTimerStarted={this.state.isTimerStarted} onCorrect={this.handleCorrect} onNext={this.handleScoreboard} />
                 }
                 <Timer onTimerEnd={this.handleTimerEnd} onTimerStart={this.handleTimerStart} />
             </div>

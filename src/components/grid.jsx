@@ -16,13 +16,17 @@ export default class Grid extends Component {
         this.state = { nums: nums, inputs: new Array(500).fill(-11), submitted: false };
         this.handleInput = this.handleInput.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleNext = this.handleNext.bind(this);
     }
 
-    componentWillDismount () {
+    handleNext () {
+        let count = 0;
         for (let i = 0; i < 500; i++) {
             if (this.state.inputs[i] === this.state.nums[i].toString()) 
-                this.props.onCorrect();
+                count++;
         }
+        this.props.onCorrect(count);
+        this.props.onNext();
     }
 
     handleInput (value, idx) {
@@ -60,7 +64,11 @@ export default class Grid extends Component {
                         this.props.isTimerDone && 
                         !this.state.submitted ?
                         <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleClick}>Submit</button> :
-                        null
+                        (
+                            this.state.submitted ?
+                            <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleNext} >Next</button> :
+                            null
+                        )
                     }
                 </div>
             </div>

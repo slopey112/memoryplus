@@ -3,9 +3,10 @@ import Face from './face';
 import Random from 'random-name';
 import axios from 'axios';
 
-const defaultStyles = "bg-gray-200";
-const greenStyles = "bg-green-200";
-const redStyles = "bg-red-200";
+const inputStyles = "text-3xl rounded-md";
+const defaultStyles = inputStyles + " bg-gray-200";
+const greenStyles = inputStyles + " bg-green-200";
+const redStyles = inputStyles + " bg-red-200";
 
 export default class Gallery extends Component {
     constructor () {
@@ -71,14 +72,16 @@ export default class Gallery extends Component {
     render () {
         if (this.props.isTimerDone) {
             return (
-                <div>
-                    <Face image={this.state.faces[this.state.idx].image} />
-                    <input className={this.state.feedback === "default" ? defaultStyles : (this.state.feedback === "green" ? greenStyles : redStyles)} onChange={this.handleTextChange} type="text" />
-                    { 
-                        this.state.feedback === "default" ?
-                        <button onClick={this.handleButtonClick}>Submit</button> :
-                        <button onClick={this.right}>Next</button>
-                    }
+                <div className="flex w-1/2 h-screen">
+                    <div className="m-auto">
+                        <Face image={this.state.faces[this.state.idx].image} />
+                        <input className={this.state.feedback === "default" ? defaultStyles : (this.state.feedback === "green" ? greenStyles : redStyles)} onChange={this.handleTextChange} type="text" />
+                        { 
+                            this.state.feedback === "default" ?
+                            <button onClick={this.handleButtonClick}>Submit</button> :
+                            <button onClick={this.right}>Next</button>
+                        }
+                    </div>
                 </div>
             );
         } else {
