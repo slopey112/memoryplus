@@ -18,6 +18,13 @@ export default class Grid extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    componentWillDismount () {
+        for (let i = 0; i < 500; i++) {
+            if (this.state.inputs[i] === this.state.nums[i].toString()) 
+                this.props.onCorrect();
+        }
+    }
+
     handleInput (value, idx) {
         this.setState({ inputs: [
             ...this.state.inputs.slice(0, idx),
