@@ -3,8 +3,8 @@ import Face from './face';
 import Random from 'random-name';
 import axios from 'axios';
 
-const inputStyles = "text-3xl rounded-md";
-const defaultStyles = inputStyles + " bg-gray-200";
+const inputStyles = "text-3xl border-b-2 border-black text-center m-4";
+const defaultStyles = inputStyles + " bg-gray-300";
 const greenStyles = inputStyles + " bg-green-200";
 const redStyles = inputStyles + " bg-red-200";
 
@@ -69,6 +69,10 @@ export default class Gallery extends Component {
         let idx = this.state.idx + 1;
         while (this.state.faces[idx].image === "")
             idx = (idx + 1) % 50;
+        if (this.state.faces[idx].feedback !== "default") {
+            this.props.onFinish(this.state.ct);
+            return;
+        }
         this.setState({ idx: idx });
     }
 
@@ -86,10 +90,8 @@ export default class Gallery extends Component {
 
     getFaceURL () {
         if (this.state.faces[this.state.idx].image === "") {
-            console.log("calling get face");
             axios.get("http://localhost:5000/api/faces")
                 .then(res => {
-                    console.log(res);
                     this.setState({ faces: [
                         ...this.state.faces.slice(0, this.state.idx),
                         {
@@ -109,13 +111,13 @@ export default class Gallery extends Component {
         if (this.props.isTimerDone) {
             return (
                 <div className="flex w-1/2 h-screen">
-                    <div className="m-auto">
+                    <div className="flex flex-col m-auto">
                         <Face image={this.state.faces[this.state.idx].image} />
                         <input className={this.getFeedbackStyles()} onChange={this.handleTextChange} type="text" />
                         { 
                             this.state.faces[this.state.idx].feedback === "default" ?
-                            <button onClick={this.handleButtonClick}>Submit</button> :
-                            <button onClick={this.next}>Next</button>
+                            <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleButtonClick}>Submit</button> :
+                            <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-32 rounded-md text-2xl p-4" onClick={this.next}>Next</button>
                         }
                     </div>
                 </div>
