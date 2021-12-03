@@ -17,6 +17,7 @@ export default class Grid extends Component {
         this.handleInput = this.handleInput.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleNext = this.handleNext.bind(this);
+        this.getButton = this.getButton.bind(this);
     }
 
     handleNext () {
@@ -41,6 +42,16 @@ export default class Grid extends Component {
         this.setState({ submitted: true });
     }
 
+    getButton () {
+        if (this.props.isTimerDone && !this.state.submitted) {
+            return <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleClick}>Submit</button>;
+        } else if (this.state.submitted) {
+            return <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleNext} >Next</button>;
+        } else {
+            return null;
+        }
+    }
+
     render () {
         let arr = [];
         for (let i = 0; i < 500; i++) {
@@ -60,16 +71,7 @@ export default class Grid extends Component {
                     <div style={gridStyles} className="grid gap-1 m-10">
                         {arr}
                     </div>
-                    {
-                        this.props.isTimerDone && 
-                        !this.state.submitted ?
-                        <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleClick}>Submit</button> :
-                        (
-                            this.state.submitted ?
-                            <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-36 rounded-md text-2xl p-4" onClick={this.handleNext} >Next</button> :
-                            null
-                        )
-                    }
+                    {this.getButton()}
                 </div>
             </div>
         )
