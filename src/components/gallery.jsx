@@ -15,14 +15,18 @@ export default class Gallery extends Component {
         for (let i = 0; i < 50; i++) {
             arr.push({ 
                 image: "",
-                name: Random.first() + " " + Random.last() 
+                name: Random.first() + " " + Random.last(),
+                feedback: "default"
             });
         }
-        this.state = { idx: 0, faces: arr, text: "", feedback: "default", ct: 0 };
+        this.state = { idx: 0, faces: arr, text: "", ct: 0 };
+        this.next = this.next.bind(this);
         this.left = this.left.bind(this);
         this.right = this.right.bind(this);
         this.getFaceURL = this.getFaceURL.bind(this);
+        this.setFeedback = this.setFeedback.bind(this);
         this.handleTextChange = this.handleTextChange.bind(this);
+        this.getFeedbackStyles = this.getFeedbackStyles.bind(this);
         this.handleButtonClick = this.handleButtonClick.bind(this);
     }
 
@@ -30,12 +34,42 @@ export default class Gallery extends Component {
         this.getFaceURL();
     }
 
+    setFeedback (feedback) {
+        this.setState({ faces: [
+            ...this.state.faces.slice(0, this.state.idx),
+            {
+                image: this.state.faces[this.state.idx].image,
+                name: this.state.faces[this.state.idx].name,
+                feedback: feedback
+            },
+            ...this.state.faces.slice(this.state.idx+1)
+        ]});
+    }
+
+    getFeedbackStyles () {
+        switch (this.state.faces[this.state.idx].feedback) {
+            case "default":
+                return defaultStyles;
+            case "green":
+                return greenStyles;
+            case "red":
+                return redStyles
+        }
+    }
+
     left () {
         this.setState({ idx: this.state.idx - 1 < 0 ? 49 : this.state.idx - 1 }, this.getFaceURL);
     }
 
     right () {
-        this.setState({ idx: (this.state.idx + 1) % 50, feedback: "default" }, this.getFaceURL);
+        this.setState({ idx: (this.state.idx + 1) % 50 }, this.getFaceURL);
+    }
+
+    next () {
+        let idx = this.state.idx + 1;
+        while (this.state.faces[idx].image === "")
+            idx = (idx + 1) % 50;
+        this.setState({ idx: idx });
     }
 
     handleTextChange (e) {
@@ -43,10 +77,11 @@ export default class Gallery extends Component {
     }
 
     handleButtonClick () {
-        if (this.state.text === this.state.faces[this.state.idx].name)
-            this.setState({ feedback: "green", ct: this.state.ct + 1  });
-        else 
-            this.setState({ feedback: "red" });
+        if (this.state.text === this.state.faces[this.state.idx].name) {
+            this.setFeedback("green");
+            this.setState({ ct: this.state.ct + 1  });
+        } else 
+            this.setFeedback("red");
     }
 
     getFaceURL () {
@@ -59,7 +94,8 @@ export default class Gallery extends Component {
                         ...this.state.faces.slice(0, this.state.idx),
                         {
                             image: res.data,
-                            name: this.state.faces[this.state.idx].name
+                            name: this.state.faces[this.state.idx].name,
+                            feedback: "default"
                         },
                         ...this.state.faces.slice(this.state.idx+1)
                     ]});
@@ -75,11 +111,11 @@ export default class Gallery extends Component {
                 <div className="flex w-1/2 h-screen">
                     <div className="m-auto">
                         <Face image={this.state.faces[this.state.idx].image} />
-                        <input className={this.state.feedback === "default" ? defaultStyles : (this.state.feedback === "green" ? greenStyles : redStyles)} onChange={this.handleTextChange} type="text" />
+                        <input className={this.getFeedbackStyles()} onChange={this.handleTextChange} type="text" />
                         { 
-                            this.state.feedback === "default" ?
+                            this.state.faces[this.state.idx].feedback === "default" ?
                             <button onClick={this.handleButtonClick}>Submit</button> :
-                            <button onClick={this.right}>Next</button>
+                            <button onClick={this.next}>Next</button>
                         }
                     </div>
                 </div>
