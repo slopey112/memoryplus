@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import View from './view';
 
 export default class Home extends Component {
@@ -11,7 +12,7 @@ export default class Home extends Component {
                     </div>
                     <h2 className="mx-auto my-3.5 text-3xl text-gray-200 font-sans">Improve your memory.</h2>
                     <div>
-                        <button className="block mx-auto text-gray-100 shadow-md bg-blue-700 w-1/3 rounded-md text-2xl p-3" >Get Started</button>
+                        <Link to="/register" className="text-center block mx-auto text-gray-100 shadow-md bg-blue-700 w-1/3 rounded-md text-2xl p-3" >Get Started</Link>
                     </div>
                 </div>
                 <div className="h-screen flex-1 grid grid-cols-3 grid-rows-4 grid-flow-row gap-6 p-10 panel">

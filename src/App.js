@@ -1,6 +1,7 @@
 import Home from './components/home';
 import SpeedNumbers from './components/speed-numbers';
 import NamesAndFaces from './components/names-and-faces';
+import Register from './components/register';
 import {
     BrowserRouter as Router,
     Routes,
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/speed-numbers" element={<SpeedNumbers />} />
             <Route path="/names-and-faces" element={<NamesAndFaces />} />
+            <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
     </div>
