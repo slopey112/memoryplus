@@ -66,7 +66,7 @@ export default class Grid extends Component {
             }
         }
         return (
-            <div className="flex w-1/2 h-screen">
+            <div className="overflow-auto flex w-1/2 h-screen">
                 <div className="mx-auto">
                     <div style={gridStyles} className="grid gap-1 m-10">
                         {arr}
