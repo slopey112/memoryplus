@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import InputField from "./input-field";
+
 export default class Register extends Component {
     constructor () {
         super();
@@ -42,18 +44,7 @@ export default class Register extends Component {
         return (
             <div>
                 <h1>Register</h1>
-                <form>
-                    <label>
-                        { this.state.usernameError !== "" && <p>{this.state.usernameError}</p> }
-                        Username:
-                        <input onChange={this.handleFieldChange} type="text" name="username" />
-                    </label>
-                    <label>
-                        { this.state.passwordError !== "" && <p>{this.state.passwordError}</p> }
-                        Password:
-                        <input onChange={this.handleFieldChange} type="password" name="password" />
-                    </label>
-                </form>
+                <InputField onFieldChange={this.handleFieldChange} usernameError={this.state.usernameError} passwordError={this.state.passwordError} />
                 <button onClick={this.handleRegister}>Submit</button>
                 <p>Have an account? <Link to="/login">Login here.</Link></p>
             </div>
