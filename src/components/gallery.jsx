@@ -90,7 +90,7 @@ export default class Gallery extends Component {
 
     getFaceURL () {
         if (this.state.faces[this.state.idx].image === "") {
-            axios.get("http://localhost:5000/api/faces")
+            axios.get("/api/faces")
                 .then(res => {
                     this.setState({ faces: [
                         ...this.state.faces.slice(0, this.state.idx),
