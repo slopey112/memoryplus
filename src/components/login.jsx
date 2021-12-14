@@ -32,9 +32,13 @@ export default class Login extends Component {
 
     render () {
         return (
-            <div>
-                <InputField onFieldChange={this.handleFieldChange} />
-                <button onClick={this.handleLogin}>Submit</button>
+            <div className="flex">
+                <div className="h-screen w-48 bg-gradient-to-t from-blue-400 to-blue-600" />
+                <div className="p-8 w-96">
+                    <h1 className="text-3xl font-bold">Login</h1>
+                    <InputField onFieldChange={this.handleFieldChange} />
+                    <button className="text-center text-gray-100 shadow-md bg-blue-700 w-28 rounded-md text-xl p-3" onClick={this.handleLogin}>Submit</button>
+                </div>
             </div>
         );
     }
