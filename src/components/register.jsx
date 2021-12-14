@@ -45,7 +45,7 @@ export default class Register extends Component {
             <div>
                 <h1>Register</h1>
                 <InputField onFieldChange={this.handleFieldChange} usernameError={this.state.usernameError} passwordError={this.state.passwordError} />
-                <button onClick={this.handleRegister}>Submit</button>
+                <button className="text-center text-gray-100 shadow-md bg-blue-700 w-32 rounded-md text-2xl p-3" onClick={this.handleRegister}>Submit</button>
                 <p>Have an account? <Link to="/login">Login here.</Link></p>
             </div>
         );
